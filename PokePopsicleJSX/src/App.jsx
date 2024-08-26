@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import PokePopsicle from './pages/PokePopsicle'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -7,6 +8,7 @@ function App() {
   return (
     <>
       <h1>Hello world</h1>
+      <PokePopsicle/>
     </>
   )
 }
