@@ -1,14 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import PokePopsicle from './pages/PokePopsicle'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pokeData, setPokeData] = useState([])
 
+  useEffect(() =>{
+    fetch("https://pokeapi.co/api/v2/pokemon/?limit=1025")
+    
+      .then (r => r.json())
+      .then(data => setPokeData(data.results))
+      .catch(error => console.error('Error fetching data:', error))
+  },[])
+  console.log(pokeData[0]?.name)
   return (
     <>
-      <h1>Hello world</h1>
-      <PokePopsicle/>
+      <header>PokeMon Popsicle Creator</header>
+      <PokePopsicle pokeData={pokeData}/>
     </>
   )
 }

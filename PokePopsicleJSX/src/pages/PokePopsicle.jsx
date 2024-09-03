@@ -1,11 +1,15 @@
 import { useState } from "react"
 
 
-function PokePopsicle(){
+function PokePopsicle({pokeData}){
 
 
     return(
-        <h1>pokePop Page</h1>
+        <>
+        <h1>PokePop Page</h1>
+        <h2>{pokeData[0]?.name}</h2>
+        
+        </>
     )
 }
 
