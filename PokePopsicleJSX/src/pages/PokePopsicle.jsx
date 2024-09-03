@@ -4,7 +4,26 @@ import { useState } from "react"
 function PokePopsicle({pokeData}){
 
     const [ selectedPokemon, setSelectedPokemon] = useState({})
+    const [ pokemon, setPokemon] = useState(null)
 
+    function handleClick(e){
+        console.log(e)
+        fetch(e)
+        .then (r => {
+            if(!r.ok){
+                throw new Error("Network response was not ok");
+            }
+            return r.json()
+        })
+        .then ((pokemon) => {
+            setPokemon(pokemon)
+        })
+        .catch((error) => {
+            console.error("Error fetching Pokémon data:", error)
+        })
+    }
+
+   
     return(
         <>
         <h1>PokéPop Page</h1>
@@ -17,8 +36,9 @@ function PokePopsicle({pokeData}){
                         }</option>
                 ))}
         </select>
-        <button onClick={()=> console.log(selectedPokemon)}>Select</button>
-        
+        <button onClick={()=> handleClick(selectedPokemon)}>Select</button>
+        <p></p>
+        {pokemon && <img src={pokemon.sprites.front_default} alt={pokemon.name}/> }
         </>
     )
 }
