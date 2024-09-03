@@ -19,11 +19,11 @@ function App() {
     .then((items) => setPokeData(items))
     .catch((error)=> (console.error("error", error)))
   }, [])
-  console.log(pokeData[0].name)
+  // console.log(pokeData[0].name)
 
   return (
     <>
-      <header>PokéMon Popsicle Creator</header>
+      <header>Pokémon Popsicle Creator</header>
       <PokePopsicle pokeData={pokeData}/>
     </>
   )
