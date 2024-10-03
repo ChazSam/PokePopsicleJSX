@@ -11,6 +11,11 @@ function PokePopsicle({ pokeData }) {
   const [selectedPokemon, setSelectedPokemon] = useState({});
   const [pokemon, setPokemon] = useState(null);
   const [selectPopsicle, setSelectPopsicle] = useState(null);
+  const [loading, setLoading] = useState(false)
+  const [joke, setJoke] = useState({
+    setup: "",
+    punchline: ""
+  })
 
   const popsiclePics = [
     { label: "Red", src: popRed },
@@ -23,7 +28,7 @@ function PokePopsicle({ pokeData }) {
   ];
 
   function handleClick(e) {
-    console.log(e);
+    // console.log(e);
     fetch(e)
       .then((r) => {
         if (!r.ok) {
@@ -45,12 +50,36 @@ function PokePopsicle({ pokeData }) {
     setSelectPopsicle(selected.src);
   }
 
+  function generateJoke() {
+    setLoading(true)
+    fetch("https://official-joke-api.appspot.com/jokes/random")
+    .then(r => r.json())
+    .then(item => {setJoke({
+      setup: item.setup,
+      punchline: item.punchline
+
+    })
+    setLoading(false)
+  })
+    .catch((error)=>{
+      console.error("Error", error)
+    })
+  }
+
+  function clearJoke(){
+    setJoke({
+      joke: "",
+      punchline: ""
+    }
+    )
+  }
+
   return (
     <>
       <div>
         <h1>PokéPop Page</h1>
         <h2>Choose your Pokémon</h2>
-        <select onChange={(e) => setSelectedPokemon(e.target.value)}>
+        <select id="selectPokemon" onChange={(e) => setSelectedPokemon(e.target.value)}>
           <option>Select a Pokémon</option>
           {pokeData.map((pokemon, index) => (
             <option key={pokemon.name} value={pokemon.url}>
@@ -66,7 +95,11 @@ function PokePopsicle({ pokeData }) {
         <button onClick={() => handleClick(selectedPokemon)}>Select</button>
         <p></p>
         {pokemon && (
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+          <img
+            src={pokemon.sprites.front_default}
+            alt={pokemon.name}
+            style={{ width: "200px" }}
+          />
         )}
       </div>
 
@@ -74,7 +107,7 @@ function PokePopsicle({ pokeData }) {
         <h1>Popsicle Colors</h1>
         <h2>Select a color of selectPopsicle</h2>
 
-        <select onChange={handleSelectChange}>
+        <select id="selectPopsicle" onChange={handleSelectChange}>
           <option>select a color</option>
           {popsiclePics.map((popsicle, index) => (
             <option key={index} value={popsicle.label}>
@@ -88,6 +121,22 @@ function PokePopsicle({ pokeData }) {
         {selectPopsicle && (
           <img src={selectPopsicle} style={{ width: "100px" }} />
         )}
+      </div>
+
+      <div>
+        <h1>Jokes</h1>
+        <h2>Add a joke?</h2>
+        {loading? (
+          <p>Loading...</p>
+        ) : (
+          <>
+          <p>{joke.setup}</p>
+          <p>{joke.punchline}</p>
+          </>
+        )}
+
+        <button onClick={generateJoke}>Random Joke</button>
+        <button onClick={clearJoke}>clear</button>
       </div>
     </>
   );
