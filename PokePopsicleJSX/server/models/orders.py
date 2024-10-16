@@ -1,11 +1,10 @@
 
-
 from config import db
 
 class Orders(db.Model):
     __tablename__ = 'orders'
 
-    id = db.Column(db.Interger, primary_key = True)
+    id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False)
     pokemon = db.Column(db.String, nullable = False)
@@ -14,4 +13,4 @@ class Orders(db.Model):
     punchline = db.Column(db.String)
 
     def __repr__(self):
-        return f'<Order #{self.id}: {self.name}, {self.email}, {self.pokemon}, {self.color}, {self.setup}, {self.punchline}'
+        return f'<Order #{self.id}: {self.name}, {self.email}, {self.pokemon}, {self.color}, {self.setup}, {self.punchline}>'
