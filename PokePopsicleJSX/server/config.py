@@ -15,10 +15,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.db'
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
-db = SQLAlchemy(metadata=metadata)
+db = SQLAlchemy(app, metadata=metadata)
 
 migrate = Migrate(app, db)
-db.init_app(app)
+# db.init_app(app)
 
 # Instantiate REST API
 api = Api(app)

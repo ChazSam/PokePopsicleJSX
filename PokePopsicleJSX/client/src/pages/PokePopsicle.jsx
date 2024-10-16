@@ -12,6 +12,8 @@ function PokePopsicle({ pokeData }) {
   const [pokemon, setPokemon] = useState(null);
   const [selectPopsicle, setSelectPopsicle] = useState(null);
   const [loading, setLoading] = useState(false)
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
   const [joke, setJoke] = useState({
     setup: "",
     punchline: ""
@@ -67,7 +69,7 @@ function PokePopsicle({ pokeData }) {
 
   function clearJoke(){
     setJoke({
-      joke: "",
+      setup: "",
       punchline: ""
     }
     )
@@ -104,7 +106,7 @@ function PokePopsicle({ pokeData }) {
 
       <div>
         <h1>Popsicle Colors</h1>
-        <h2>Select a color of selectPopsicle</h2>
+        <h2>Select a Color</h2>
 
         <select id="selectPopsicle" onChange={handleSelectChange}>
           <option>select a color</option>
@@ -136,6 +138,21 @@ function PokePopsicle({ pokeData }) {
 
         <button onClick={generateJoke}>Random Joke</button>
         <button onClick={clearJoke}>clear</button>
+      </div>
+      <div>
+        <div>
+
+        <h1>Name</h1>
+        <input></input>
+        <button>Enter</button>
+        {name}
+        </div>
+        <div>
+          <h1>Email</h1>
+          <input></input>
+          <button>Enter</button>
+          {email}
+        </div>
       </div>
     </>
   );
