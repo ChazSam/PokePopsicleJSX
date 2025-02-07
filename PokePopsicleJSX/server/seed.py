@@ -5,10 +5,6 @@ from models.orders import Orders
 with app.app_context():
     Orders.query.delete()
 
-    # orders = Orders.query.all()
-    # for order in orders:
-    #     print(order)
-
     order1 = Orders(
         name = "Joe Shmoe",
         email = "jshmoe@email.com",

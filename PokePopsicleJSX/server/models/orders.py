@@ -1,7 +1,8 @@
 
 from config import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Orders(db.Model):
+class Orders(db.Model, SerializerMixin):
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key = True)
