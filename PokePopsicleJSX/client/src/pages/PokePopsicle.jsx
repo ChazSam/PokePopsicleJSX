@@ -77,8 +77,9 @@ function PokePopsicle({ pokeData }) {
 
   return (
     <>
-      <div>
-        <h1>PokéPop Page</h1>
+    <div class='bg-gray-900  font-bold text-2xl ' >
+      <div >
+        <h1 class="text-center ">PokéPop Page</h1>
         <h2>Choose your Pokémon</h2>
         <select id="selectPokemon" onChange={(e) => setSelectedPokemon(e.target.value)}>
           <option>Select a Pokémon</option>
@@ -153,6 +154,7 @@ function PokePopsicle({ pokeData }) {
           <button>Enter</button>
           {email}
         </div>
+      </div>
       </div>
     </>
   );

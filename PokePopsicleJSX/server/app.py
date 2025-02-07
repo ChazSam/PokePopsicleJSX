@@ -1,6 +1,6 @@
 
 from config import app, db, api
-
+from models.orders import Orders 
 
 
 # Define a simple route

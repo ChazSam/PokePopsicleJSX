@@ -1,3 +1,4 @@
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -7,24 +8,25 @@ from sqlalchemy import MetaData
 
 app = Flask(__name__)
 
-# Set up the database URL (SQLite in this case)
+# Set up the database URL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
-# Initialize SQLAlchemy with the Flask app
-# db = SQLAlchemy(app)
+# Define naming convention for migrations
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
-db = SQLAlchemy(metadata=metadata)
 
+# Initialize SQLAlchemy **before** initializing Migrate
+db = SQLAlchemy(metadata=metadata)
+db.init_app(app)  # Call init_app() before Migrate
+
+# Initialize Migrate after db.init_app()
 migrate = Migrate(app, db)
-db.init_app(app)
 
 # Instantiate REST API
 api = Api(app)
 
 # Instantiate CORS
 CORS(app)
-

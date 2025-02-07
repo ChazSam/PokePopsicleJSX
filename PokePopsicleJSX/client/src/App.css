@@ -1,15 +1,15 @@
-body {
+/* body {
   height: 100vh;
   background-image: url("./assets/PokemonBeach.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   /* overflow: hidden; */
-}
+/* } */
 
-header {
+/* header {
   color: yellow;
   font-size: 60px;
   text-align: center;
-  text-decoration: underline;
-}
+  text-decoration: underline; */
+/* } */ 
