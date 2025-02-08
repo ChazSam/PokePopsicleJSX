@@ -6,6 +6,8 @@ import popGreen from "../assets/pop green.jpg";
 import popBlue from "../assets/pop blue.jpg";
 import popPurple from "../assets/pop purple.jpg";
 import popRainbow from "../assets/pop rainbow.jpg";
+import {Formik, useFormik} from 'formik'
+import * as yup from 'yup';
 
 function PokePopsicle({ pokeData }) {
   const [selectedPokemon, setSelectedPokemon] = useState({});
@@ -77,9 +79,9 @@ function PokePopsicle({ pokeData }) {
 
   return (
     <>
-    <div class='bg-gray-900  font-bold text-2xl ' >
+    <div className='bg-blue-300  font-bold text-2xl ' >
       <div >
-        <h1 class="text-center ">PokéPop Page</h1>
+        <h1 className="text-center ">PokéPop Page</h1>
         <h2>Choose your Pokémon</h2>
         <select id="selectPokemon" onChange={(e) => setSelectedPokemon(e.target.value)}>
           <option>Select a Pokémon</option>

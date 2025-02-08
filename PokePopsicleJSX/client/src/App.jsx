@@ -22,7 +22,7 @@ function App() {
   // console.log(pokeData[0].name)
 
   return (
-    <div class = "bg-green-500 text-center background-image">
+    <div className = "bg-green-500 text-center background-image">
       <header>Pokémon Popsicle Creator</header>
       <PokePopsicle pokeData={pokeData} />
     </div>
