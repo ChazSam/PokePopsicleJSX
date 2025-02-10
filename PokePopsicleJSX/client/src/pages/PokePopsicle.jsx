@@ -81,8 +81,8 @@ function PokePopsicle({ pokeData }) {
   //     });
   // }
 
-  function handleSelectChange(e) {
-     formik.values.color = e.target.value;
+  function handlePopsicleColor(e) {
+    formik.values.color = e.target.value;
     const selected = popsiclePics.find((p) => p.label === formik.values.color);
     setSelectPopsicle(selected.src);
   }
@@ -103,12 +103,12 @@ function PokePopsicle({ pokeData }) {
       });
   }
 
-  function clearJoke() {
-    formik.values({
-      setup: "",
-      punchline: "",
-    });
-  }
+  // function clearJoke() {
+  //   formik.values({
+  //     setup: "",
+  //     punchline: "",
+  //   });
+  // }
 
   return (
     <>
@@ -117,10 +117,7 @@ function PokePopsicle({ pokeData }) {
           <div>
             <h1 className="text-center ">PokéPop Page</h1>
             <h2>Choose your Pokémon</h2>
-            <select
-              id="selectPokemon"
-              onChange={formik.handleChange}
-            >
+            <select id="selectPokemon" onChange={formik.handleChange}>
               <option>Select a Pokémon</option>
               {pokeData.map((pokemon, index) => (
                 <option key={pokemon.name} value={pokemon.url}>
@@ -133,7 +130,13 @@ function PokePopsicle({ pokeData }) {
                 </option>
               ))}
             </select>
-            <button type="button" onChange={formik.handleChange} value={formik.values.pokemon}>Select</button>
+            <button
+              type="button"
+              onChange={formik.handleChange}
+              value={formik.values.pokemon}
+            >
+              Select
+            </button>
             <p></p>
             {pokemon && (
               <img
@@ -148,7 +151,7 @@ function PokePopsicle({ pokeData }) {
             <h1>Popsicle Colors</h1>
             <h2>Select a Color</h2>
 
-            <select id="selectPopsicle" onChange={handleSelectChange}>
+            <select id="selectPopsicle" onChange={handlePopsicleColor}>
               <option>select a color</option>
               {popsiclePics.map((popsicle, index) => (
                 <option key={index} value={popsicle.label}>
@@ -157,7 +160,9 @@ function PokePopsicle({ pokeData }) {
               ))}
             </select>
 
-            <button type="button" onClick={() => console.log(selectPopsicle)}>Select</button>
+            <button type="button" onClick={() => console.log(selectPopsicle)}>
+              Select
+            </button>
             <p></p>
             {selectPopsicle && (
               <img src={selectPopsicle} style={{ width: "100px" }} />
@@ -165,32 +170,53 @@ function PokePopsicle({ pokeData }) {
           </div>
 
           <div>
-            <h1>Jokes</h1>
-            <h2>Add a joke?</h2>
-            {loading ? (
+            <h2>Add a joke? (optional)</h2>
+            <p>Joke</p>
+            <input
+              id="setup"
+              value={formik.values.setup}
+              onChange={formik.handleChange}
+            ></input>
+            <p></p>
+            <p>Punchline</p>
+            <input
+              id="punchline"
+              value={formik.values.punchline}
+              onChange={formik.handleChange}
+            ></input>
+            <p></p>
+
+            {/* {loading ? (
               <p>Loading...</p>
             ) : (
               <>
                 <p>{formik.values.setup}</p>
                 <p>{formik.values.punchline}</p>
               </>
-            )}
+            )} */}
 
-            <button type="button" onClick={generateJoke}>Random Joke</button>
-            <button type="button" onClick={clearJoke}>clear</button>
+            <button type="button" onClick={generateJoke}>
+              Random Joke
+            </button>
+            <p></p>
+            {/* <button type="button" onClick={clearJoke}>Clear</button> */}
           </div>
           <div>
             <div>
               <h1>Name</h1>
-              <input id="name" value={formik.values.name} onChange={formik.handleChange}></input>
-              
-         
+              <input
+                id="name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+              ></input>
             </div>
             <div>
               <h1>Email</h1>
-              <input id="email" value={formik.values.email} onChange={formik.handleChange}></input>
-              
-              
+              <input
+                id="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+              ></input>
             </div>
           </div>
         </div>
