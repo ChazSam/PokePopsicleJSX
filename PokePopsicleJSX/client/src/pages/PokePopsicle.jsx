@@ -13,13 +13,13 @@ function PokePopsicle({ pokeData }) {
   const [selectedPokemon, setSelectedPokemon] = useState({});
   const [pokemon, setPokemon] = useState(null);
   const [selectPopsicle, setSelectPopsicle] = useState(null);
-  const [loading, setLoading] = useState(false)
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [joke, setJoke] = useState({
     setup: "",
     punchline: ""
   })
+  const [loading, setLoading] = useState(false)
 
   const popsiclePics = [
     { label: "Red", src: popRed },
@@ -30,6 +30,47 @@ function PokePopsicle({ pokeData }) {
     { label: "Purple", src: popPurple },
     { label: "Rainbow", src: popRainbow },
   ];
+
+  const formSchema = yup.object().shape({
+    pokemon: yup.string().required("Please select a Pokemon"),
+    selectPopsicle: yup.string().required("Please select a popsicle color"),
+    email: yup.string().required("Please enter your email"),
+    setup: yup.string(),
+    punchline: yup.string()
+  })
+
+  const formik= useFormik({
+    initialValues:{
+      pokemon:"",
+      selectPopsicle:"",
+      name:"",
+      email:"",
+      setup:"",
+      punchline:""
+    },
+
+    validationSchema: formSchema,
+    onSubmit:(values) => {
+      fetch("/ordersResponse",{
+        method: "POST",
+        headers:{
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(values, null, 2)
+
+      })
+      // .then(r) => {
+      //   if (r.ok){
+      //     r.json().then((doc)=> )
+      //   }
+      // }
+    }
+  })
+
+
+
+
+  
 
   function handleClick(e) {
     fetch(e)
