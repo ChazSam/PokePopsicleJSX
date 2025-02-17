@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import popRed from "../assets/pop red.jpg";
 import popOrange from "../assets/pop orange.jpg";
 import popYellow from "../assets/pop yellow.jpg";
@@ -10,17 +10,9 @@ import { Formik, useFormik } from "formik";
 import * as yup from "yup";
 
 function PokePopsicle({ pokeData }) {
-  // const [selectedPokemon, setSelectedPokemon] = useState({});
-  const [pokemon, setPokemon] = useState(null);
   const [selectPopsicle, setSelectPopsicle] = useState(null);
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [joke, setJoke] = useState({
-  //   setup: "",
-  //   punchline: "",
-  // });
-
   const [loading, setLoading] = useState(false);
+  const [pokemonSprite, setPokemonSprite] = useState("")
 
   const popsiclePics = [
     { label: "Red", src: popRed },
@@ -34,7 +26,7 @@ function PokePopsicle({ pokeData }) {
 
   const formSchema = yup.object().shape({
     pokemon: yup.string().required("Please select a Pokemon"),
-    selectPopsicle: yup.string().required("Please select a popsicle color"),
+    color: yup.string().required("Please select a popsicle color"),
     email: yup.string().required("Please enter your email"),
     setup: yup.string(),
     punchline: yup.string(),
@@ -65,25 +57,27 @@ function PokePopsicle({ pokeData }) {
     },
   });
 
-  // function handleClick(e) {
-  //   fetch(e)
-  //     .then((r) => {
-  //       if (!r.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return r.json();
-  //     })
-  //     .then((pokemon) => {
-  //       setPokemon(pokemon);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching Pokémon data:", error);
-  //     });
-  // }
+  function handleSelectPokemon(e){
+
+    const selectedUrl = e.target.value;
+    // console.log(selectedUrl)
+    if (!selectedUrl) return;
+
+    fetch(selectedUrl)
+      .then((r) => r.json())
+      .then((data) => {
+        formik.setFieldValue("pokemon", data.name)
+        setPokemonSprite(data.sprites.front_default)
+      })
+      .catch((err) => console.error("Error fetching Pokémon:", err))
+  }
+
+
+
 
   function handlePopsicleColor(e) {
     formik.values.color = e.target.value;
-    const selected = popsiclePics.find((p) => p.label === formik.values.color);
+    const selected = popsiclePics.find((p) => p.label === formik.values.color)
     setSelectPopsicle(selected.src);
   }
 
@@ -92,35 +86,28 @@ function PokePopsicle({ pokeData }) {
     fetch("https://official-joke-api.appspot.com/jokes/random")
       .then((r) => r.json())
       .then((item) => {
-        ({
-          // formik.values.setup: item.setup,
-          // formik.values.punchline: item.punchline,
-        });
+        formik.values.setup = item.setup,
+        formik.values.punchline = item.punchline,
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error", error);
       });
   }
-
-  // function clearJoke() {
-  //   formik.values({
-  //     setup: "",
-  //     punchline: "",
-  //   });
-  // }
+  console.log(formik.values)
 
   return (
     <>
-      <form onSubmit={console.log(formik.values)}>
+      <form >
         <div className="bg-blue-300  font-bold text-2xl ">
           <div>
             <h1 className="text-center ">PokéPop Page</h1>
             <h2>Choose your Pokémon</h2>
-            <select id="selectPokemon" onChange={formik.handleChange}>
+
+            <select id="pokemon"  onChange={handleSelectPokemon} >
               <option>Select a Pokémon</option>
               {pokeData.map((pokemon, index) => (
-                <option key={pokemon.name} value={pokemon.url}>
+                <option key={pokemon.name} value={pokemon.url} >
                   {pokemon.name.charAt(0).toUpperCase() +
                     pokemon.name.substring(1).toLowerCase()}{" "}
                   -- #
@@ -130,22 +117,18 @@ function PokePopsicle({ pokeData }) {
                 </option>
               ))}
             </select>
-            <button
-              type="button"
-              onChange={formik.handleChange}
-              value={formik.values.pokemon}
-            >
-              Select
-            </button>
+
             <p></p>
-            {pokemon && (
+            
+            {pokemonSprite && (
               <img
-                src={pokemon.sprites.front_default}
-                alt={pokemon.name}
+                src={pokemonSprite}
+                alt={formik.values.pokemon}
                 style={{ width: "200px" }}
               />
             )}
           </div>
+
 
           <div>
             <h1>Popsicle Colors</h1>
@@ -154,15 +137,11 @@ function PokePopsicle({ pokeData }) {
             <select id="selectPopsicle" onChange={handlePopsicleColor}>
               <option>select a color</option>
               {popsiclePics.map((popsicle, index) => (
-                <option key={index} value={popsicle.label}>
+                <option key={index} value={popsicle.url}>
                   {popsicle.label}
                 </option>
               ))}
             </select>
-
-            <button type="button" onClick={() => console.log(selectPopsicle)}>
-              Select
-            </button>
             <p></p>
             {selectPopsicle && (
               <img src={selectPopsicle} style={{ width: "100px" }} />
