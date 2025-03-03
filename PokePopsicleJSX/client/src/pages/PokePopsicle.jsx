@@ -43,25 +43,26 @@ function PokePopsicle({ pokeData }) {
     },
 
     validationSchema: formSchema,
+
     onSubmit: (values) => {
-      fetch("/ordersResponse", {
+      fetch("http://localhost:5555/addOrder", {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(values, null, 2),
       })
+
         .then((r) => r.json())
         .then((data) => console.log("Success:", data))
-        .catch((err) => console.error("Error:", err));
+        .catch((err) => console.error("Error:", err))
     },
   });
 
   function handleSelectPokemon(e){
 
-    const selectedUrl = e.target.value;
-    // console.log(selectedUrl)
-    if (!selectedUrl) return;
+    const selectedUrl = e.target.value
+    if (!selectedUrl) return
 
     fetch(selectedUrl)
       .then((r) => r.json())
@@ -72,13 +73,10 @@ function PokePopsicle({ pokeData }) {
       .catch((err) => console.error("Error fetching Pokémon:", err))
   }
 
-
-
-
   function handlePopsicleColor(e) {
-    formik.values.color = e.target.value;
+    formik.values.color = e.target.value
     const selected = popsiclePics.find((p) => p.label === formik.values.color)
-    setSelectPopsicle(selected.src);
+    setSelectPopsicle(selected.src)
   }
 
   function generateJoke() {
@@ -98,7 +96,7 @@ function PokePopsicle({ pokeData }) {
 
   return (
     <>
-      <form >
+      <form onSubmit={formik.handleSubmit}>
         <div className="bg-blue-300  font-bold text-2xl ">
           <div>
             <h1 className="text-center ">PokéPop Page</h1>
@@ -120,13 +118,7 @@ function PokePopsicle({ pokeData }) {
 
             <p></p>
             
-            {pokemonSprite && (
-              <img
-                src={pokemonSprite}
-                alt={formik.values.pokemon}
-                style={{ width: "200px" }}
-              />
-            )}
+
           </div>
 
 
@@ -143,9 +135,7 @@ function PokePopsicle({ pokeData }) {
               ))}
             </select>
             <p></p>
-            {selectPopsicle && (
-              <img src={selectPopsicle} style={{ width: "100px" }} />
-            )}
+
           </div>
 
           <div>
@@ -197,6 +187,16 @@ function PokePopsicle({ pokeData }) {
                 onChange={formik.handleChange}
               ></input>
             </div>
+        {pokemonSprite && (
+              <img
+                src={pokemonSprite}
+                alt={formik.values.pokemon}
+                style={{ width: "200px" }}
+              />
+            )}
+                        {selectPopsicle && (
+              <img src={selectPopsicle} style={{ width: "100px" }} />
+            )}
           </div>
         </div>
         <button type="submit">Submit</button>

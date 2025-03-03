@@ -9,11 +9,12 @@ class OrdersResource(Resource):
     def get(self):
         get_orders = [order.to_dict() for order in Orders.query.all()]
         return get_orders, 200
-        
+    
+class AddOrder(Resource):        
     def post(self):
         new_order = Orders(
             name = request.get_json().get("name"),
-            email = request.get_json().get("name"),
+            email = request.get_json().get("email"),
             pokemon = request.get_json().get("pokemon"),
             color = request.get_json().get("color"),
             setup = request.get_json().get("setup"),
@@ -21,6 +22,7 @@ class OrdersResource(Resource):
         )
 
         try:
+           
             db.session.add(new_order)
             db.session.commit()
 
@@ -31,6 +33,7 @@ class OrdersResource(Resource):
         
 
 api.add_resource(OrdersResource, "/orders", endpoint="orders")
+api.add_resource(AddOrder, "/addOrder", endpoint="addOrder")
 
 @app.route('/')
 def home():
