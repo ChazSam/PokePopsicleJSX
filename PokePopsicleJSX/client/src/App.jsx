@@ -13,17 +13,8 @@ function App() {
       .catch(error => console.error('Error fetching data:', error))
   },[])
 
-  // useEffect(() => {
-  //   fetch("http://127.0.0.1:3001/results")
-  //     .then((r) => r.json())
-  //     .then((items) => setPokeData(items))
-  //     .catch((error) => console.error("error", error));
-  // }, []);
-  // console.log(pokeData[0].name)
-
   return (
-    <div className = "bg-green-500 text-center background-image">
-      <header>Pokémon Popsicle Creator</header>
+    <div>
       <PokePopsicle pokeData={pokeData} />
     </div>
   );

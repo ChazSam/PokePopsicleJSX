@@ -12,7 +12,7 @@ import * as yup from "yup";
 function PokePopsicle({ pokeData }) {
   const [selectPopsicle, setSelectPopsicle] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [pokemonSprite, setPokemonSprite] = useState("")
+  const [pokemonSprite, setPokemonSprite] = useState("");
 
   const popsiclePics = [
     { label: "Red", src: popRed },
@@ -52,31 +52,29 @@ function PokePopsicle({ pokeData }) {
         },
         body: JSON.stringify(values, null, 2),
       })
-
         .then((r) => r.json())
         .then((data) => console.log("Success:", data))
-        .catch((err) => console.error("Error:", err))
+        .catch((err) => console.error("Error:", err));
     },
   });
 
-  function handleSelectPokemon(e){
-
-    const selectedUrl = e.target.value
-    if (!selectedUrl) return
+  function handleSelectPokemon(e) {
+    const selectedUrl = e.target.value;
+    if (!selectedUrl) return;
 
     fetch(selectedUrl)
       .then((r) => r.json())
       .then((data) => {
-        formik.setFieldValue("pokemon", data.name)
-        setPokemonSprite(data.sprites.front_default)
+        formik.setFieldValue("pokemon", data.name);
+        setPokemonSprite(data.sprites.front_default);
       })
-      .catch((err) => console.error("Error fetching Pokémon:", err))
+      .catch((err) => console.error("Error fetching Pokémon:", err));
   }
 
   function handlePopsicleColor(e) {
-    formik.values.color = e.target.value
-    const selected = popsiclePics.find((p) => p.label === formik.values.color)
-    setSelectPopsicle(selected.src)
+    formik.values.color = e.target.value;
+    const selected = popsiclePics.find((p) => p.label === formik.values.color);
+    setSelectPopsicle(selected.src);
   }
 
   function generateJoke() {
@@ -84,28 +82,28 @@ function PokePopsicle({ pokeData }) {
     fetch("https://official-joke-api.appspot.com/jokes/random")
       .then((r) => r.json())
       .then((item) => {
-        formik.values.setup = item.setup,
-        formik.values.punchline = item.punchline,
-        setLoading(false);
+        (formik.values.setup = item.setup),
+          (formik.values.punchline = item.punchline),
+          setLoading(false);
       })
       .catch((error) => {
         console.error("Error", error);
       });
   }
-  console.log(formik.values)
+  console.log(formik.values);
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="bg-blue-300  font-bold text-2xl ">
+      <form className="text-center" onSubmit={formik.handleSubmit}>
+        <header className="bg-blue-500 text-6xl ">Pokémon Popsicle Creator</header>
+        <div className="bg-white bg-opacity-50">
           <div>
-            <h1 className="text-center ">PokéPop Page</h1>
-            <h2>Choose your Pokémon</h2>
+            <h2>Choose a Pokémon</h2>
 
-            <select id="pokemon"  onChange={handleSelectPokemon} >
+            <select id="pokemon" onChange={handleSelectPokemon}>
               <option>Select a Pokémon</option>
               {pokeData.map((pokemon, index) => (
-                <option key={pokemon.name} value={pokemon.url} >
+                <option key={pokemon.name} value={pokemon.url}>
                   {pokemon.name.charAt(0).toUpperCase() +
                     pokemon.name.substring(1).toLowerCase()}{" "}
                   -- #
@@ -115,13 +113,7 @@ function PokePopsicle({ pokeData }) {
                 </option>
               ))}
             </select>
-
-            <p></p>
-            
-
           </div>
-
-
           <div>
             <h1>Popsicle Colors</h1>
             <h2>Select a Color</h2>
@@ -134,8 +126,6 @@ function PokePopsicle({ pokeData }) {
                 </option>
               ))}
             </select>
-            <p></p>
-
           </div>
 
           <div>
@@ -146,7 +136,6 @@ function PokePopsicle({ pokeData }) {
               value={formik.values.setup}
               onChange={formik.handleChange}
             ></input>
-            <p></p>
             <p>Punchline</p>
             <input
               id="punchline"
@@ -167,8 +156,6 @@ function PokePopsicle({ pokeData }) {
             <button type="button" onClick={generateJoke}>
               Random Joke
             </button>
-            <p></p>
-            {/* <button type="button" onClick={clearJoke}>Clear</button> */}
           </div>
           <div>
             <div>
@@ -187,14 +174,14 @@ function PokePopsicle({ pokeData }) {
                 onChange={formik.handleChange}
               ></input>
             </div>
-        {pokemonSprite && (
+            {pokemonSprite && (
               <img
                 src={pokemonSprite}
                 alt={formik.values.pokemon}
                 style={{ width: "200px" }}
               />
             )}
-                        {selectPopsicle && (
+            {selectPopsicle && (
               <img src={selectPopsicle} style={{ width: "100px" }} />
             )}
           </div>
