@@ -102,7 +102,11 @@ function PokePopsicle({ pokeData }) {
           <div>
             <h2>Choose a Pokémon</h2>
 
-            <select id="pokemon" onChange={handleSelectPokemon}>
+            <select
+              id="pokemon"
+              onChange={handleSelectPokemon}
+              className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option>Select a Pokémon</option>
               {pokeData.map((pokemon, index) => (
                 <option key={pokemon.name} value={pokemon.url}>
@@ -120,7 +124,11 @@ function PokePopsicle({ pokeData }) {
             <h1>Popsicle Colors</h1>
             <h2>Select a Color</h2>
 
-            <select id="selectPopsicle" onChange={handlePopsicleColor}>
+            <select
+              id="selectPopsicle"
+              onChange={handlePopsicleColor}
+              className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option>select a color</option>
               {popsiclePics.map((popsicle, index) => (
                 <option key={index} value={popsicle.url}>
@@ -137,25 +145,24 @@ function PokePopsicle({ pokeData }) {
               id="setup"
               value={formik.values.setup}
               onChange={formik.handleChange}
+              type="text"
+              className="border border-gray-400 rounded p-3 text-lg w-96 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></input>
             <p>Punchline</p>
             <input
               id="punchline"
               value={formik.values.punchline}
               onChange={formik.handleChange}
+              type="text"
+              className="border border-gray-400 rounded p-3 text-lg w-96 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></input>
             <p></p>
 
-            {/* {loading ? (
-              <p>Loading...</p>
-            ) : (
-              <>
-                <p>{formik.values.setup}</p>
-                <p>{formik.values.punchline}</p>
-              </>
-            )} */}
-
-            <button type="button" onClick={generateJoke}>
+            <button
+              type="button"
+              onClick={generateJoke}
+              className="text-black bg-slate-300 hover:bg-slate-600 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+            >
               Random Joke
             </button>
           </div>
@@ -166,37 +173,44 @@ function PokePopsicle({ pokeData }) {
                 id="name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
+                className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></input>
             </div>
             <div>
               <h1>Email</h1>
               <input
                 id="email"
+                type="text"
                 value={formik.values.email}
                 onChange={formik.handleChange}
+                className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="name@email.com"
               ></input>
             </div>
           </div>
+          <button
+            type="submit"
+            className="text-black bg-slate-300 hover:bg-slate-600 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+          >
+            Submit
+          </button>
         </section>
 
         <section className="bg-yellow-100 bg-opacity-50 object-contain ">
           {selectPopsicle && (
-          <div className="relative">
-            <img src={selectPopsicle}  className="relative w-32"/>
-            
-          {pokemonSprite && (
-            <img
-            src={pokemonSprite}
-            alt={formik.values.pokemon}
-            className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full" 
-          
-            />
-          )}
-          </div>
+            <div className="relative">
+              <img src={selectPopsicle} className="relative w-32" />
+
+              {pokemonSprite && (
+                <img
+                  src={pokemonSprite}
+                  alt={formik.values.pokemon}
+                  className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                />
+              )}
+            </div>
           )}
         </section>
-
-        <button type="submit">Submit</button>
       </form>
       <footer></footer>
     </>
