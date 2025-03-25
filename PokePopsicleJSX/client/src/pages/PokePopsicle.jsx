@@ -179,16 +179,20 @@ function PokePopsicle({ pokeData }) {
           </div>
         </section>
 
-        <section className="bg-yellow-100 bg-opacity-50 object-contain">
+        <section className="bg-yellow-100 bg-opacity-50 object-contain ">
+          {selectPopsicle && (
+          <div className="relative">
+            <img src={selectPopsicle}  className="relative w-32"/>
+            
           {pokemonSprite && (
             <img
-              src={pokemonSprite}
-              alt={formik.values.pokemon}
-              style={{ width: "200px" }}
+            src={pokemonSprite}
+            alt={formik.values.pokemon}
+            className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full" 
+          
             />
           )}
-          {selectPopsicle && (
-            <img src={selectPopsicle} style={{ width: "100px" }} className="absolute"/>
+          </div>
           )}
         </section>
 
