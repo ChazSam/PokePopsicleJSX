@@ -95,8 +95,10 @@ function PokePopsicle({ pokeData }) {
   return (
     <>
       <form className="text-center" onSubmit={formik.handleSubmit}>
-        <header className="bg-blue-500 text-6xl ">Pokémon Popsicle Creator</header>
-        <div className="bg-white bg-opacity-50">
+        <header className="bg-blue-500 text-6xl ">
+          Pokémon Popsicle Creator
+        </header>
+        <section className="bg-white bg-opacity-50 ">
           <div>
             <h2>Choose a Pokémon</h2>
 
@@ -174,20 +176,25 @@ function PokePopsicle({ pokeData }) {
                 onChange={formik.handleChange}
               ></input>
             </div>
-            {pokemonSprite && (
-              <img
-                src={pokemonSprite}
-                alt={formik.values.pokemon}
-                style={{ width: "200px" }}
-              />
-            )}
-            {selectPopsicle && (
-              <img src={selectPopsicle} style={{ width: "100px" }} />
-            )}
           </div>
-        </div>
+        </section>
+
+        <section className="bg-yellow-100 bg-opacity-50 object-contain">
+          {pokemonSprite && (
+            <img
+              src={pokemonSprite}
+              alt={formik.values.pokemon}
+              style={{ width: "200px" }}
+            />
+          )}
+          {selectPopsicle && (
+            <img src={selectPopsicle} style={{ width: "100px" }} className="absolute"/>
+          )}
+        </section>
+
         <button type="submit">Submit</button>
       </form>
+      <footer></footer>
     </>
   );
 }
